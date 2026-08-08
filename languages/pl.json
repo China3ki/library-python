@@ -1,0 +1,17 @@
+{
+  "mainNotLogged": {
+    "menu": [
+      "Logowanie",
+      "Rejestracja",
+      "Zobacz książki",
+      "Ustawienia",
+      "Wyjdź"
+    ],
+    "prompt": "Wybierz następne menu (-1 aby wyjść z aplikacji): "
+  },
+  "warnings": {
+    "warningInputInt": "Wprowadzone dane nie są liczbą!",
+    "warningInputOutOfTheRange": "Wprowadzona liczba nie odpowiada żadnej pozycji!"
+  }
+
+}

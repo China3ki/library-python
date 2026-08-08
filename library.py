@@ -7,7 +7,7 @@ class Library:
 
     def app(self):
         while self._ui_manager.len_states():
-            pass
+            self._ui_manager.push(self._ui_manager.states[-1].init_state())
 
 a = Library()
 a.app()
