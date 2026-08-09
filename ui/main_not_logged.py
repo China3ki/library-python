@@ -11,6 +11,8 @@ class MainNotLogged(State):
         return self._change_state(user_input)
     def _change_state(self, user_input : int | None) -> str:
         match user_input:
+            case -1:
+                return "back"
             case 1:
                 return "login"
             case 2:
@@ -22,4 +24,4 @@ class MainNotLogged(State):
             case 5:
                 return "exit"
             case _:
-                return "back"
+                raise ValueError("That view does not exist!")

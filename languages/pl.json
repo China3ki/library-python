@@ -9,9 +9,25 @@
     ],
     "prompt": "Wybierz następne menu (-1 aby wyjść z aplikacji): "
   },
+  "register": {
+    "prompt": "Wypełnij formularz. Aby anulować wpisz (-1)",
+    "name": "Wprowadź imię: ",
+    "surname": "Wprowadź nazwisko: ",
+    "email": "Wprowadź email: ",
+    "birthday": "Wprowadź date urodzenia: ",
+    "password_info": "hasło musi mieć co najmniej 8 znaków, jedną dużą literę, jedną liczbę oraz znak specjalny",
+    "password": "Wprowadź hasło: ",
+    "password_confirmed": "Potwierdź hasło: "
+  },
   "warnings": {
     "warningInputInt": "Wprowadzone dane nie są liczbą!",
-    "warningInputOutOfTheRange": "Wprowadzona liczba nie odpowiada żadnej pozycji!"
+    "warningInputOutOfTheRange": "Wprowadzona liczba nie odpowiada żadnej pozycji!",
+    "warningEmptyInput": "Wprowadzone dane są puste!",
+    "warningEmailRegex":"Email jest nieprawidłowy!",
+    "warningUniqueEmail": "Konto z takim emailem już istnieje!",
+    "warningWrongDate": "Wprowadzona data jest nieprawidłowa!",
+    "warningPasswordRequirements": "Hasło nie spełnia wymagań!",
+    "warningComparePasswords": "Hasła nie są takie same!"
   }
 
 }

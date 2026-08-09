@@ -6,10 +6,10 @@ class State(ABC):
         self._view = view
         self._warnings = warnings
     @abstractmethod
-    def init_state(self):
+    def init_state(self) -> str:
         pass
     @abstractmethod
-    def _change_state(self, user_input):
+    def _change_state(self, user_input) -> str:
         pass
     def _print_view(self):
         for i, view in enumerate(self._view["menu"]):

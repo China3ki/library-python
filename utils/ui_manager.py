@@ -1,6 +1,7 @@
 import json
 
 from ui.main_not_logged import MainNotLogged
+from ui.register import Register
 
 
 class UiManager:
@@ -34,7 +35,7 @@ class UiManager:
             case "login":
                 pass
             case "register":
-                pass
+                return Register(self._views["register"], self._views["warnings"])
             case "books":
                 pass
             case "settings":
