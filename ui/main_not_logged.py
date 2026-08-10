@@ -3,12 +3,12 @@ from utils.user_input import user_input_int
 
 
 class MainNotLogged(State):
-    def __init__(self, view : dict, warnings :dict):
-        super().__init__(view, warnings)
-    def init_state(self) -> str:
+    def __init__(self, view : dict, warnings :dict, session):
+        super().__init__(view, warnings, session)
+    def init_state(self):
         self._print_view()
         user_input = user_input_int(len(self._view["menu"]), self._view["prompt"], self._warnings)
-        return self._change_state(user_input)
+        return self._change_state(user_input), self._session
     def _change_state(self, user_input : int | None) -> str:
         match user_input:
             case -1:

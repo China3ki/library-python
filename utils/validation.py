@@ -10,7 +10,7 @@ def validate_password(password : str) -> bool:
     number_pattern = re.search("[0-9]", password)
     uppercase_letter = re.search("[A-Z]", password)
     special_character = re.search("(?=.*?[#?!@$%^&*-])", password)
-    password_length = len(password) > 8
+    password_length = len(password) >= 8
     if number_pattern and uppercase_letter and special_character and password_length:
         return True
     return False

@@ -1,5 +1,8 @@
 import json
 
+from core.session import Session
+from ui.login import Login
+from ui.main_logged import MainLogged
 from ui.main_not_logged import MainNotLogged
 from ui.register import Register
 
@@ -8,34 +11,40 @@ class UiManager:
     def __init__(self):
         self._views = {}
         self._get_view()
-        self.states = [MainNotLogged(self._views["mainNotLogged"], self._views["warnings"])]
-    def push(self, next_state : str):
+        self.states = [MainNotLogged(self._views["mainNotLogged"], self._views["warnings"], Session(None, None, None, None, None, None))]
+    def push(self, next_state : str, session):
         """ Dodaje następny widok do _states, jeśli w _views znajduję podany w argumencie widok. Wyrzuca błąd, jeśli nie znajdzie podanego widoku."""
         if next_state == "back":
-            self.pop()
+            self.pop(session)
             return
         if next_state == "exit":
             self.clear_states()
             return
-        self.states.append(self._get_next_state(next_state))
+        self.states.append(self._get_next_state(next_state, session))
 
-    def pop(self):
+    def pop(self, session):
         """ Usuwa ostatni widok ze stosu """
         self.states.pop()
+        if len(self.states) > 0:
+            self.states[-1]._session = session
+
     def clear_states(self):
         """ Czyści stos"""
         self.states.clear()
     def len_states(self) -> int:
         """ Zwraca ilość aktywnych widoków w stosie"""
         return len(self.states)
-    def _get_next_state(self, next_state : str):
+    def _get_next_state(self, next_state : str, session):
         match next_state:
+            case "mainLogged":
+                self.clear_states() # Czyści stack po zalogowaniu
+                return MainLogged(self._views["mainLogged"], self._views["warnings"], session)
             case "mainNotLogged":
-                return MainNotLogged(self._views["mainNotLogged"], self._views["warnings"])
+                return MainNotLogged(self._views["mainNotLogged"], self._views["warnings"], session)
             case "login":
-                pass
+                return Login(self._views["login"], self._views["warnings"], session)
             case "register":
-                return Register(self._views["register"], self._views["warnings"])
+                return Register(self._views["register"], self._views["warnings"], session)
             case "books":
                 pass
             case "settings":

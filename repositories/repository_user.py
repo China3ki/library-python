@@ -1,4 +1,5 @@
 import psycopg2
+from psycopg2.extras import DictCursor
 
 from database.connection import get_connection
 
@@ -28,3 +29,15 @@ def add_new_user(user) -> bool:
     except (Exception, psycopg2.DatabaseError) as error:
         raise error
 
+def login(email: str):
+    try:
+        with get_connection() as conn:
+            with conn.cursor(cursor_factory=DictCursor) as cur:
+                cur.execute("SELECT id, name, surname, birthday,  email, password, is_admin from users WHERE email = %s", (email,))
+                if cur.rowcount == 0:
+                    return False, ()
+                db_data = cur.fetchone()
+                user_data = {"id": db_data[0], "name": db_data[1], "surname": db_data[2], "birthday": db_data[3], "email": db_data[4], "password": db_data[5], "is_admin": db_data[6] }
+                return True, user_data
+    except (Exception, psycopg2.DatabaseError) as error:
+        raise error

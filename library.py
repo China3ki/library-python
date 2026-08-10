@@ -1,3 +1,5 @@
+import bcrypt
+
 from utils.ui_manager import UiManager
 
 
@@ -7,7 +9,9 @@ class Library:
 
     def app(self):
         while self._ui_manager.len_states():
-            self._ui_manager.push(self._ui_manager.states[-1].init_state())
+            next_view, session = self._ui_manager.states[-1].init_state()
+
+            self._ui_manager.push(next_view, session)
 
 
 

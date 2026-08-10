@@ -1,6 +1,6 @@
 import bcrypt
 
-from repositories.service_user import email_not_exist
+from repositories.repository_user import email_not_exist, login
 from utils.user_input import user_input_str
 from utils.validation import validate_email, validate_password
 
@@ -34,12 +34,26 @@ def compare_password(prompt : str, warnings: dict[str, str], password : str) -> 
     """ Weryfikuje czy hasła są takie same """
     while True:
         user_input = user_input_str(prompt, warnings)
-        if user_input == 1:
+        if user_input == -1:
             return user_input
         if user_input != password:
             print(warnings["warningComparePasswords"])
             continue
         return True
+def check_account_exist(email : str, password: str, warnings: dict[str, str]) -> tuple | bool:
+    """ Weryfikuje czy konto istnieje, jeśli tak, zwraca dane użytkownika i True. Jeśli nie zwraca pustą krotkę oraz False"""
+    success, data = login(email)
+    if not success:
+        print(warnings["warningWrongLoginData"])
+        return False, ()
+    compare_passwords = check_password(password, data["password"])
+    if not compare_passwords:
+        print(warnings["warningWrongLoginData"])
+        return False, ()
+    return True, data
+
+
+
 def hash_password(plain_text_password):
     """ Koduję hasło, następnie zwraca zakodowane."""
     return bcrypt.hashpw(plain_text_password, bcrypt.gensalt())

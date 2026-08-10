@@ -2,11 +2,12 @@ from abc import ABC, abstractmethod
 
 
 class State(ABC):
-    def __init__(self, view, warnings):
+    def __init__(self, view, warnings, session):
         self._view = view
         self._warnings = warnings
+        self._session = session
     @abstractmethod
-    def init_state(self) -> str:
+    def init_state(self):
         pass
     @abstractmethod
     def _change_state(self, user_input) -> str:
