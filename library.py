@@ -1,5 +1,3 @@
-import bcrypt
-
 from utils.ui_manager import UiManager
 
 

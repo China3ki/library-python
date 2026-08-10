@@ -1,6 +1,7 @@
 import json
 
 from core.session import Session
+from ui.books import Books
 from ui.login import Login
 from ui.main_logged import MainLogged
 from ui.main_not_logged import MainNotLogged
@@ -46,7 +47,7 @@ class UiManager:
             case "register":
                 return Register(self._views["register"], self._views["warnings"], session)
             case "books":
-                pass
+                return Books(self._views["books"], self._views["warnings"], session)
             case "settings":
                 pass
             case _: raise ValueError("That view does not exist!")

@@ -22,6 +22,16 @@
     "prompt": "Wybierz następne menu (-1 aby wyjść z aplikacji): ",
     "welcomePrompt": "Witaj "
 },
+  "books": {
+    "previousPage": "Poprzednia strona",
+    "nextPage": "Następna strona",
+    "sort": "Sortuj",
+    "borrowBook": "Wypożycz książkę",
+    "rateBook": "Oceń książkę",
+    "back": "Wróć",
+    "prompt": "Wybierz dostępną opcję (-1 aby wrócić): ",
+    "header":"| lp | Tytuł | Autor | Na stanie | Kategoria | Data publikacji | Średnia oceń | "
+  },
   "register": {
     "prompt": "Wypełnij formularz. Aby anulować wpisz (-1)",
     "name": "Wprowadź imię: ",
@@ -49,5 +59,4 @@
     "warningComparePasswords": "Hasła nie są takie same!",
     "warningWrongLoginData": "Email lub hasło jest nieprawidłowe!"
   }
-
 }

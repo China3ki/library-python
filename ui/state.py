@@ -12,6 +12,6 @@ class State(ABC):
     @abstractmethod
     def _change_state(self, user_input) -> str:
         pass
-    def _print_view(self):
-        for i, view in enumerate(self._view["menu"]):
+    def _print_view(self, menu : str = "menu"):
+        for i, view in enumerate(self._view[menu]):
             print(f" {i + 1} - {view}")
