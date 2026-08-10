@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from xmlrpc.client import DateTime
+from datetime import datetime
 
 
 @dataclass
@@ -10,5 +10,5 @@ class Book:
     title: str
     amount: int
     genre: str
-    publish_date: DateTime
-    avg_rate: float| str
+    publish_date: datetime
+    avg_rate: float | None

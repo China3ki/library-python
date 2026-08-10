@@ -29,8 +29,19 @@
     "borrowBook": "Wypożycz książkę",
     "rateBook": "Oceń książkę",
     "back": "Wróć",
+    "header":"| lp | Tytuł | Autor | Na stanie | Kategoria | Data publikacji | Średnia ocen | ",
+    "noRating": "Brak ocen",
+    "sort_menu": [
+      "id",
+      "imię autora",
+      "Nazwisko autora",
+      "Tytuł",
+      "ilość",
+      "data"
+    ],
     "prompt": "Wybierz dostępną opcję (-1 aby wrócić): ",
-    "header":"| lp | Tytuł | Autor | Na stanie | Kategoria | Data publikacji | Średnia oceń | "
+    "prompt_sort": "Wybierz opcję sortowania: (-1 aby wrócić): ",
+    "prompt_sort_direction": "Jak chcesz sortować? (1 - w górę. 2 - w dół): "
   },
   "register": {
     "prompt": "Wypełnij formularz. Aby anulować wpisz (-1)",

@@ -7,11 +7,14 @@ class ServiceBooks:
         self.page = 1
         self.limit = 10
         self.books_count = get_books_row_count()
+        self.sort_option = "id"
+        self.order_desc = False
         self.books = []
-    def get_books(self, sort_option: str, order_desc: bool):
+    def get_books(self):
         """ Tworzy paginację, pobiera książki z bazy danych i twórzy obiekty książki"""
-        offset = (self.page * self.limit) - self.limit if self.page > 1 else 0
-        books = get_books_from_db(self.limit, offset, sort_option, order_desc)
+        offset = (self.page * self.limit) - self.limit if self.page > 1 else 0 # Działa jak należy, chyba
+        books = get_books_from_db(self.limit, offset, self.sort_option, self.order_desc)
+        self.books.clear()
         for book in books:
-            new_book = Book(book[0], book[1], book[2], book[3], book[4], book[5], book[6], book[7] if book[7] is not None else "Brak ocen")
+            new_book = Book(book[0], book[1], book[2], book[3], book[4], book[5], book[6], book[7])
             self.books.append(new_book)

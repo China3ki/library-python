@@ -23,6 +23,7 @@ def get_books_row_count() -> int:
         raise error
 
 def _modify_query(query: str, sort_option : str, order_desc: bool, limit: int , offset : int ):
+    """ Modyfikuję kwerenda według podanych argumentów i decyduje o typie sortu oraz rodzaju. Zwraca zmodyfikowaną kwerenda """
     query += " ORDER BY "
     match sort_option:
         case "id":
@@ -37,6 +38,8 @@ def _modify_query(query: str, sort_option : str, order_desc: bool, limit: int , 
             query += "amount"
         case "date":
             query += "publish_date"
+        case _:
+            query += "books.id"
     if order_desc:
         query += " DESC"
     query += f" LIMIT {limit} OFFSET {offset}"
