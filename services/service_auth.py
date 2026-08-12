@@ -1,56 +1,44 @@
+from enum import Enum
+from typing import Any
+
 import bcrypt
 
+from enums.warnings import Warnings
 from repositories.repository_user import email_not_exist, login
-from utils.user_input import user_input_str
 from utils.validation import validate_email, validate_password
 
 
-def verify_user_email(prompt : str, warnings : dict[str, str]) -> str | int:
-    """ Weryfikuje od użytkownika czy email jest prawidłowy, a następnie sprawdza, czy email już istnieje w bazie danych"""
-    while True:
-        user_input = user_input_str(prompt, warnings)
-        if user_input == -1:
-            return user_input
-        if not validate_email(user_input):
-            print(warnings["warningEmailRegex"])
-            continue
-        unique_email = email_not_exist(user_input)
-        if not unique_email:
-            print(warnings["warningUniqueEmail"])
-            continue
-        return user_input
-def verify_password(prompt :str, warnings: dict[str, str]) -> str | int:
-    """ Weryfikuje od użytkownika czy hasło spełnia wymagania """
-    while True:
-        user_input = user_input_str(prompt, warnings)
-        if user_input == -1:
-            return user_input
-        if not validate_password(user_input):
-            print(warnings["warningPasswordRequirements"])
-            continue
-        return user_input
 
-def compare_password(prompt : str, warnings: dict[str, str], password : str) -> bool | int:
+
+def verify_user_email(email : str) -> tuple[bool, Warnings | None]:
+    """ Weryfikuje od użytkownika czy email jest prawidłowy, a następnie sprawdza, czy email już istnieje w bazie danych"""
+    if not validate_email(email):
+        return False, Warnings.WARNING_EMAIL_REGEX
+    if not email_not_exist(email):
+        return False, Warnings.WARNING_UNIQUE_EMAIL
+    return True, None
+
+def verify_password(password: str) -> tuple[bool, Warnings | None]:
+    """ Weryfikuje od użytkownika czy hasło spełnia wymagania """
+    if not validate_password(password):
+        return False, Warnings.WARNING_PASSWORD_REQUIREMENTS
+    return True, None
+
+
+def compare_password(password : str, confirmed_password : str) -> tuple[bool, Warnings] | tuple[bool, None]:
     """ Weryfikuje czy hasła są takie same """
-    while True:
-        user_input = user_input_str(prompt, warnings)
-        if user_input == -1:
-            return user_input
-        if user_input != password:
-            print(warnings["warningComparePasswords"])
-            continue
-        return True
-def check_account_exist(email : str, password: str, warnings: dict[str, str]) -> tuple | bool:
+    if password != confirmed_password:
+        return False, Warnings.WARNING_COMPARE_PASSWORDS
+    return True, None
+def check_account_exist(email : str, password: str) -> tuple[bool, Warnings, None] | tuple[bool, None, Any]:
     """ Weryfikuje czy konto istnieje, jeśli tak, zwraca dane użytkownika i True. Jeśli nie zwraca pustą krotkę oraz False"""
     success, data = login(email)
     if not success:
-        print(warnings["warningWrongLoginData"])
-        return False, ()
+        return False, Warnings.WARNING_WRONG_LOGIN_DATA, None
     compare_passwords = check_password(password, data["password"])
     if not compare_passwords:
-        print(warnings["warningWrongLoginData"])
-        return False, ()
-    return True, data
+        return False, Warnings.WARNING_WRONG_LOGIN_DATA, None
+    return True, None, data
 
 
 

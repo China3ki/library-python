@@ -22,7 +22,6 @@ def add_new_user(user) -> bool:
         with get_connection() as conn:
             with conn.cursor() as cur:
                 cur.execute(query, values)
-                conn.commit()
                 return True
     except (Exception, psycopg2.DatabaseError) as error:
         raise error
@@ -30,7 +29,7 @@ def add_new_user(user) -> bool:
 def login(email: str):
     try:
         with get_connection() as conn:
-            with conn.cursor(cursor_factory=DictCursor) as cur:
+            with conn.cursor() as cur:
                 cur.execute("SELECT id, name, surname, birthday,  email, password, is_admin from users WHERE email = %s", (email,))
                 if cur.rowcount == 0:
                     return False, ()

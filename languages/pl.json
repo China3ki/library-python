@@ -28,6 +28,7 @@
     "sort": "Sortuj",
     "borrowBook": "Wypożycz książkę",
     "rateBook": "Oceń książkę",
+    "addToFavorite": "Dodaj do ulubionych",
     "back": "Wróć",
     "header":"| lp | Tytuł | Autor | Na stanie | Kategoria | Data publikacji | Średnia ocen | ",
     "noRating": "Brak ocen",
@@ -40,8 +41,16 @@
       "data"
     ],
     "prompt": "Wybierz dostępną opcję (-1 aby wrócić): ",
-    "prompt_sort": "Wybierz opcję sortowania: (-1 aby wrócić): ",
-    "prompt_sort_direction": "Jak chcesz sortować? (1 - w górę. 2 - w dół): "
+    "promptSort": "Wybierz opcję sortowania: (-1 aby wrócić): ",
+    "promptSortDirection": "Jak chcesz sortować? (1 - w górę. 2 - w dół): ",
+    "promptAddToFavourite": "Z listy książek powyżej, wybierz którą chcesz dodać do ulubionych (-1 aby wrócić): ",
+    "promptRateBook": "Z listy książek powyżej, wybierz którą chcesz ocenić (-1 aby wrócić):",
+    "promptEditRate": "Czy chcesz edytować ocenę? (1 - Tak. 2 - Nie): ",
+    "promptRate": "Wprowadź ocenę (1 - 10): ",
+    "infoEditRate": "Oceniłeś już - [BOOK.TITLE] na [BOOK.RATE]",
+    "infoAddedToFavorite": "Dodano do ulubionych ",
+    "infoEditRateSuccess": "Edytowano ocenę pomyślnie.",
+    "infoRateSuccess": "Dodano ocenę pomyślnie."
   },
   "register": {
     "prompt": "Wypełnij formularz. Aby anulować wpisz (-1)",
@@ -49,10 +58,10 @@
     "surname": "Wprowadź nazwisko: ",
     "email": "Wprowadź email: ",
     "birthday": "Wprowadź date urodzenia (xxxx-xx-xx): ",
-    "password_info": "hasło musi mieć co najmniej 8 znaków, jedną dużą literę, jedną liczbę oraz znak specjalny",
+    "passwordInfo": "Hasło musi mieć co najmniej 8 znaków, jedną dużą literę, jedną liczbę oraz znak specjalny",
     "password": "Wprowadź hasło: ",
-    "password_confirmed": "Potwierdź hasło: ",
-    "register_completed_successfully": "Rejestracja przebiegła pomyślnie"
+    "passwordConfirmed": "Potwierdź hasło: ",
+    "registerCompletedSuccessfully": "Rejestracja przebiegła pomyślnie"
   },
   "login": {
     "prompt": "Wypełnij formularz. Aby anulować wpisz (-1)",
@@ -68,6 +77,9 @@
     "warningWrongDate": "Wprowadzona data jest nieprawidłowa!",
     "warningPasswordRequirements": "Hasło nie spełnia wymagań!",
     "warningComparePasswords": "Hasła nie są takie same!",
-    "warningWrongLoginData": "Email lub hasło jest nieprawidłowe!"
+    "warningWrongLoginData": "Email lub hasło jest nieprawidłowe!",
+
+    "warningBookAmount": "Nie mamy obecnie takiej książki na stanie tej książki",
+    "warningBookFavoriteExist": "Książka została już polubiona!"
   }
 }
