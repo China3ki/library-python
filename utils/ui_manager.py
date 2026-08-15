@@ -48,7 +48,7 @@ class UiManager:
             case States.REGISTER:
                 return Register(self._views["register"], self._views["warnings"], session)
             case States.BOOKS:
-                return Books(self._views["books"], self._views["warnings"], session)
+                return Books(self._views["books"], self._views["warnings"], session, self._views["workflows"])
             case States.SETTINGS:
                 pass
             case _: raise ValueError("That view does not exist!")

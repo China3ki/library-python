@@ -9,4 +9,3 @@ class Warnings (Enum):
     WARNING_WRONG_LOGIN_DATA = "warningWrongLoginData"
 
     WARNING_BOOK_AMOUNT = "warningBookAmount"
-    WARNING_BOOK_FAVORITE_EXIST = 'warningBookFavoriteExist'

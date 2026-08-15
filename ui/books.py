@@ -1,14 +1,16 @@
-from core.session import Session
 from enums.books_decision import BooksDecision
 from enums.sort_options import SortOptions
 from enums.states import States
 from services.service_books import ServiceBooks
 from ui.state import State
 from utils.user_input import user_input_int
+from ui.workflows.workflow_favorites import favorite_procedure
+from ui.workflows.workflow_rate import rate_book_procedure
 
 
 class Books(State):
-    def __init__(self, view, warnings, session):
+    def __init__(self, view, warnings, session, workflow):
+        self._workflow = workflow
         super().__init__(view, warnings, session)
     def init_state(self):
         book_service = ServiceBooks()
@@ -20,7 +22,7 @@ class Books(State):
             print(self._view["header"])
             for i, book in enumerate(book_service.books):
                 print(
-                    f"| {i + 1} | {book.title} | {book.name} {book.surname} | {book.amount} | {book.genre} | {book.publish_date} | {book.avg_rate if book.avg_rate is not None else self._view["noRating"]} |")
+                    f"| {i + 1} | {book.title} | {book.name} {book.surname} | {book.amount} | {book.genre} | {book.publish_date} | {round(book.avg_rate, 2) if  book.avg_rate is not None else self._view["noRating"]} |")
             for i, v in enumerate(menu.values(), start=1):
                 print(f"{i} - {v}")
             user_input = user_input_int(len(menu), self._view["prompt"], self._warnings)
@@ -44,7 +46,7 @@ class Books(State):
                 book_service.get_books()
                 return None
             case BooksDecision.ADD_TO_FAVORITE:
-                self._add_to_favorite(book_service)
+                favorite_procedure(self.session.id, book_service.books, self._workflow, self._warnings)
                 return None
             case BooksDecision.SORT:
                 self._sort_procedure(book_service)
@@ -52,65 +54,13 @@ class Books(State):
             case BooksDecision.BORROW_BOOK:
                 pass
             case BooksDecision.RATE_BOOK:
-                self._rate_book_procedure(book_service)
+                success = rate_book_procedure(self.session.id, book_service.books, self._workflow, self._warnings)
+                if success: book_service.get_books()
                 return None
             case BooksDecision.BACK:
                 return BooksDecision.BACK
 
 
-    def _add_to_favorite(self, book_service):
-       """ Rozpoczyna proces dodawania książki do tabeli ulubione  """
-       while True:
-           user_input = user_input_int(len(book_service.books), self._view["promptAddToFavourite"], self._warnings)
-           if user_input == -1:
-               return
-           success, warning = book_service.add_to_favorite(
-               book_service.books[user_input - 1].id, self.session.id)  ## -1, aby odnieść się do prawidłowego indeksu
-           if not success:
-               print(self._warnings[warning.value])
-               continue
-           print(f'{self._view["infoAddedToFavorite"]} {book_service.books[user_input - 1].title}')
-           return
-
-    def _rate_book_procedure(self, book_service):
-        """ Przeprowadza procedurę oceny książki. Jeśli użytkownik już ocenił książkę ma możliwość zmiany dotychczasowej oceny"""
-        while True:
-            user_input = user_input_int(len(book_service.books), self._view["promptRateBook"], self._warnings)
-            if user_input == -1:
-                return
-            rate_exist, previous_rate = book_service.is_rate(book_service.books[user_input - 1].id, self.session.id)
-            if rate_exist:
-                success_edit = self._edit_rate_book(book_service, book_service.books[user_input - 1], previous_rate)
-                if not success_edit:
-                    continue
-                return
-            success_rate = self._rate_book(book_service, book_service.books[user_input - 1].id)
-            if not success_rate:
-                continue
-            return
-
-    def _rate_book(self, book_service, book_id:int) -> bool:
-        """ Pyta użytkownika o ocenę książki. Zwraca True, jeśli, ocena została wystawiona. False, jeśli, nie."""
-        user_input_rate = user_input_int(10, self._view["promptRate"], self._warnings)
-        if user_input_rate == -1:
-            return False
-        book_service.rate_book(book_index, self.session.id, user_input_rate)
-        print(self._view["infoRateSuccess"])
-        return True
-
-    def _edit_rate_book(self, book_service,  book , previous_rate: int) -> bool:
-        """ Pozwala na edytowanie poprzedniej oceny książki. Zwraca True, jeśli, ocena została zmieniona. False, jeśli, nie."""
-        prompt_edit_rate = self._view["infoEditRate"].replace("[BOOK.TITLE]", book.title).replace("[BOOK.RATE]", str(previous_rate))
-        print(prompt_edit_rate)
-        user_input = user_input_int(2,self._view["promptEditRate"], self._warnings)
-        if user_input == 2 or user_input == -1:
-            return False
-        user_input_new_rate = user_input_int(10, self._view["promptRate"], self._warnings)
-        if user_input_new_rate == -1:
-            return False
-        book_service.edit_rate(book.id, self.session.id, user_input_new_rate)
-        print(self._view["infoEditRateSuccess"])
-        return True
 
 
     def _sort_procedure(self, book_service):
@@ -134,7 +84,7 @@ class Books(State):
                 book_service.sort_option = SortOptions.Date
         sort_order = user_input_int(2, self._view["promptSortDirection"], self._warnings)
         if sort_order == -1:
-            return None
+            return
         if sort_order == 1:
             book_service.order_desc = False
         else:

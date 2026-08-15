@@ -42,15 +42,7 @@
     ],
     "prompt": "Wybierz dostępną opcję (-1 aby wrócić): ",
     "promptSort": "Wybierz opcję sortowania: (-1 aby wrócić): ",
-    "promptSortDirection": "Jak chcesz sortować? (1 - w górę. 2 - w dół): ",
-    "promptAddToFavourite": "Z listy książek powyżej, wybierz którą chcesz dodać do ulubionych (-1 aby wrócić): ",
-    "promptRateBook": "Z listy książek powyżej, wybierz którą chcesz ocenić (-1 aby wrócić):",
-    "promptEditRate": "Czy chcesz edytować ocenę? (1 - Tak. 2 - Nie): ",
-    "promptRate": "Wprowadź ocenę (1 - 10): ",
-    "infoEditRate": "Oceniłeś już - [BOOK.TITLE] na [BOOK.RATE]",
-    "infoAddedToFavorite": "Dodano do ulubionych ",
-    "infoEditRateSuccess": "Edytowano ocenę pomyślnie.",
-    "infoRateSuccess": "Dodano ocenę pomyślnie."
+    "promptSortDirection": "Jak chcesz sortować? (1 - w górę. 2 - w dół): "
   },
   "register": {
     "prompt": "Wypełnij formularz. Aby anulować wpisz (-1)",
@@ -79,7 +71,18 @@
     "warningComparePasswords": "Hasła nie są takie same!",
     "warningWrongLoginData": "Email lub hasło jest nieprawidłowe!",
 
-    "warningBookAmount": "Nie mamy obecnie takiej książki na stanie tej książki",
-    "warningBookFavoriteExist": "Książka została już polubiona!"
+    "warningBookAmount": "Nie mamy obecnie takiej książki na stanie tej książki"
+  },
+  "workflows": {
+    "promptAddToFavourite": "Z listy książek powyżej, wybierz którą chcesz dodać do ulubionych (-1 aby wrócić): ",
+    "promptRateBook": "Z listy książek powyżej, wybierz którą chcesz ocenić (-1 aby wrócić):",
+    "promptEditRate": "Co chcesz zrobić z oceną? (1 - Edytuj, 2 - Usuń, 3 - Anuluj): ",
+    "promptRate": "Wprowadź ocenę (1 - 10): ",
+    "promptFavoriteDecision": "Czy chcesz ją usunąć z ulubionych? (1 - Tak, 2 - Anuluj): ",
+    "infoFavorite":"Masz tę książkę już w ulubionych!",
+    "infoEditRate": "Oceniłeś już - [BOOK.TITLE] na [BOOK.RATE]",
+    "infoAddedToFavorite": "Dodano do ulubionych ",
+    "infoEditRateSuccess": "Edytowano ocenę pomyślnie.",
+    "infoRateSuccess": "Dodano ocenę pomyślnie."
   }
 }
