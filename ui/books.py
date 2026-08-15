@@ -1,7 +1,8 @@
 from enums.books_decision import BooksDecision
 from enums.sort_options import SortOptions
 from enums.states import States
-from services.service_books import ServiceBooks
+from services.service_books import ServiceBooks, decrease_book_amount
+from services.service_loans import is_loan, loan_book, is_available
 from ui.state import State
 from utils.user_input import user_input_int
 from ui.workflows.workflow_favorites import favorite_procedure
@@ -52,7 +53,9 @@ class Books(State):
                 self._sort_procedure(book_service)
                 return None
             case BooksDecision.BORROW_BOOK:
-                pass
+                success = self._borrow_book(book_service)
+                if success: book_service.get_books()
+                return None
             case BooksDecision.RATE_BOOK:
                 success = rate_book_procedure(self.session.id, book_service.books, self._workflow, self._warnings)
                 if success: book_service.get_books()
@@ -60,7 +63,25 @@ class Books(State):
             case BooksDecision.BACK:
                 return BooksDecision.BACK
 
-
+    def _borrow_book(self, book_service) -> bool:
+        """ Rozpoczyna procedurę wypożyczania książki"""
+        while True:
+            user_input = user_input_int(len(book_service.books), self._view["promptBorrowBook"], self._warnings)
+            if user_input == -1:
+                return False
+            book_id = book_service.books[user_input - 1].id
+            is_exist = is_loan(book_id, self.session.id)
+            if is_exist:
+                print(self._view["infoBorrowBook"])
+                continue
+            is_book_available = is_available(book_id)
+            if not is_book_available:
+                print(self._view["infoBorrowBookNotAvailable"])
+                continue
+            loan_book(book_id, self.session.id)
+            print(f"{self._view["successBorrowBook"]} - {book_service.books[user_input - 1].title}!")
+            break
+        return True
 
 
     def _sort_procedure(self, book_service):
@@ -101,8 +122,8 @@ class Books(State):
             new_menu[BooksDecision.NEXT_PAGE] = self._view["nextPage"]
 
         if self.session.id is not None:
-            new_menu[BooksDecision.ADD_TO_FAVORITE] = self._view["addToFavorite"]
             new_menu[BooksDecision.BORROW_BOOK] = self._view["borrowBook"]
+            new_menu[BooksDecision.ADD_TO_FAVORITE] = self._view["addToFavorite"]
             new_menu[BooksDecision.RATE_BOOK] = self._view["rateBook"]
         new_menu[BooksDecision.SORT] = self._view["sort"]
         new_menu[BooksDecision.BACK] = self._view["back"]

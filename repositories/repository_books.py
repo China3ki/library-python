@@ -25,6 +25,26 @@ def get_books_row_count() -> int:
     except (Exception, psycopg2.DatabaseError) as error:
         raise error
 
+
+def is_available_db(book_id: int) -> int:
+    """ Zwraca ilość dostępnych egzemplarzy"""
+    try:
+        with get_connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute("SELECT amount from books WHERE id = %s", (book_id,))
+                return cur.fetchone()[0]
+    except (Exception, psycopg2.DatabaseError) as error:
+        raise error
+
+def decrease_book_amount_db(book_id:int):
+    """ Zmniejsza ilość dostępnych egzemplarzy """
+    try:
+        with get_connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute("UPDATE books SET amount = amount - 1 WHERE id = %s", (book_id,))
+    except (Exception, psycopg2.DatabaseError) as error:
+        raise error
+
 def _modify_query(query: str, sort_option : SortOptions, order_desc: bool, limit: int , offset : int ):
     """ Modyfikuję kwerenda według podanych argumentów i decyduje o typie sortu oraz rodzaju. Zwraca zmodyfikowaną kwerenda """
     query += " ORDER BY "

@@ -13,6 +13,7 @@ def favorite_procedure(user_id: int, books: list, workflow: dict[str, str], warn
             if favorite_decision == -1 or favorite_decision == 2:
                 return
             remove_favorite(books[user_input - 1].id, user_id)
+            print(workflow["infoRemoveFavorite"])
             return
 
         add_to_favorite(

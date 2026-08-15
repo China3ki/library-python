@@ -41,6 +41,7 @@ def _decision_rate_book(user_id: int, book, workflow: dict[str, str], warnings: 
         return False
     if user_input == 2:
         remove_rate(book.id, user_id)
+        print(workflow["infoRemoveRate"])
         return True
     user_input_new_rate = user_input_int(10, workflow["promptRate"], warnings)
     if user_input_new_rate == -1:

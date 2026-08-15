@@ -1,7 +1,10 @@
 from dto.response.response_book import Book
 from enums.sort_options import SortOptions
-from repositories.repository_books import get_books_row_count, get_books_from_db
+from repositories.repository_books import get_books_row_count, get_books_from_db, decrease_book_amount_db
 
+
+def decrease_book_amount(book_id: int):
+    decrease_book_amount_db(book_id)
 
 class ServiceBooks:
     def __init__(self):
@@ -19,6 +22,10 @@ class ServiceBooks:
         for book in books:
             new_book = Book(book[0], book[1], book[2], book[3], book[4], book[5], book[6], book[7])
             self.books.append(new_book)
+
+
+
+
 
 
 
