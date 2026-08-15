@@ -6,6 +6,7 @@ from ui.books import Books
 from ui.login import Login
 from ui.main_logged import MainLogged
 from ui.main_not_logged import MainNotLogged
+from ui.my_loans import MyLoans
 from ui.register import Register
 
 
@@ -49,6 +50,8 @@ class UiManager:
                 return Register(self._views["register"], self._views["warnings"], session)
             case States.BOOKS:
                 return Books(self._views["books"], self._views["warnings"], session, self._views["workflows"])
+            case States.MY_LOANS:
+                return MyLoans(self._views["MyLoans"], self._views["warnings"], session, self._views["workflows"])
             case States.SETTINGS:
                 pass
             case _: raise ValueError("That view does not exist!")

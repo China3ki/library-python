@@ -48,6 +48,19 @@
     "successBorrowBook": "Wypożyczyłeś",
     "promptSortDirection": "Jak chcesz sortować? (1 - w górę. 2 - w dół): "
   },
+  "MyLoans": {
+    "previousPage": "Poprzednia strona",
+    "nextPage": "Następna strona",
+    "sort": "Sortuj",
+    "returnBook": "Zwróć książkę",
+    "rateBook": "Oceń książkę",
+    "addToFavorite": "Dodaj do ulubionych",
+    "header":"| lp | Tytuł | Rozpoczęcie | Zakończenie |",
+    "back": "Wróć",
+    "prompt": "Wybierz dostępną opcję (-1 aby wrócić): ",
+    "infoEmptyLoans": "Nie masz aktualnie żadnych wypożyczeń!"
+
+  },
   "register": {
     "prompt": "Wypełnij formularz. Aby anulować wpisz (-1)",
     "name": "Wprowadź imię: ",

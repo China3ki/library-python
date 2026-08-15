@@ -15,5 +15,7 @@ class MainLogged(State):
         match user_input:
             case 1:
                 return States.BOOKS
+            case 2:
+                return States.MY_LOANS
             case _:
                 raise ValueError("That view does not exist!")

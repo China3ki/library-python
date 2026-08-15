@@ -5,7 +5,7 @@ from enums.sort_options import SortOptions
 
 
 def get_books_from_db(limit : int, offset : int, sort_option: SortOptions, order_desc: bool):
-    """ Pobiera książki z bazy danych, i filtruję po wskazanym przez użytkownika opcjach"""
+    """ Pobiera książki z bazy danych i filtruję po wskazanym przez użytkownika opcjach"""
     query = "SELECT books.id, authors.name AS name, authors.surname AS surname, books.title, books.amount, genres.name AS genre, books.publish_date, AVG(book_rates.rate) AS avg_rate FROM books INNER JOIN authors ON books.author_id = authors.id INNER JOIN genres ON books.genre_id = genres.id LEFT JOIN book_rates ON book_rates.book_id = books.id GROUP BY books.id, authors.name, authors.surname, books.title, books.amount, genres.name, books.publish_date"
     query = _modify_query(query, sort_option, order_desc, limit, offset)
     try:
